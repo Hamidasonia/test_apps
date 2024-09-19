@@ -5,6 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
 import 'package:test_apps/core/core.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:test_apps/features/wilayah/wilayah.dart';
 
 import 'config.dart';
 
@@ -15,156 +16,29 @@ Future<void> setupLocator() async {
 
   // ----------------------------- Authentication ----------------------------
 
-  // Data
-  // getIt
-  //   ..registerLazySingleton<AuthApiDataSource>(
-  //     () => AuthApiDataSourceImpl(
-  //       getIt(),
-  //       authLocalSource: getIt(),
-  //     ),
-  //   )
-  //   ..registerLazySingleton<AuthLocalDataSource>(
-  //     () => AuthLocalDataSourceImpl(getIt()),
-  //   )
-  //   ..registerLazySingleton<AuthRepository>(
-  //     () => AuthRepositoryImpl(getIt()),
-  //   );
-
-  // Domain
-  // getIt
-  //   ..registerLazySingleton(() => LoginUseCase(getIt()))
-  //   ..registerLazySingleton(() => LogoutUseCase(getIt()))
-  //   ..registerLazySingleton(() => ProfileUseCase(getIt()));
-
-  // getIt
-  //   ..registerFactory(
-  //     () => AuthBloc(
-  //       loginUseCase: getIt(),
-  //       logoutUseCase: getIt(),
-  //       profileUseCase: getIt(),
-  //     ),
-  //   )
-  //   ..registerFactory(() => AuthFormBloc());
-
-  // ------------------------------ Settings ---------------------------------
+  // ------------------------------ Wilayah ------------------------------------
 
   // Data
-  // getIt
-  //   ..registerLazySingleton<SettingsLocalSource>(
-  //     () => SettingsLocalSourceImpl(getIt()),
-  //   )
-  //   ..registerLazySingleton<SettingsRepository>(
-  //     () => SettingsRepositoryImpl(localSource: getIt()),
-  //   );
+  getIt
+    ..registerLazySingleton<WilayahApiDataSource>(
+      () => WilayahApiDataSourceImpl(getIt()),
+    )
+    ..registerLazySingleton<WilayahRepository>(
+      () => WilayahRepositoryImpl(getIt()),
+    );
 
   // Domain
-  // getIt
-  //   ..registerLazySingleton(() => GetThemeSettingUseCase(getIt()))
-  //   ..registerLazySingleton(() => SaveThemeSettingUseCase(getIt()))
-  //   ..registerLazySingleton(RecordErrorUseCase.new);
-  //
-  // // Presentationd
-  // getIt.registerFactory(
-  //   () => ThemeBloc(
-  //     getThemeSetting: getIt(),
-  //     saveThemeSetting: getIt(),
-  //   ),
-  // );
+  getIt
+    ..registerLazySingleton(() => ProvinceUsecase(getIt()))
+    ..registerLazySingleton(RecordErrorUseCase.new)
+    ..registerLazySingleton(() => CityUsecase(getIt()));
 
-  // ------------------------------ Billing ------------------------------------
-
-  // Data
-  // getIt
-  //   ..registerLazySingleton<BillingApiDataSource>(
-  //     () => BillingApiDataSourceImpl(getIt()),
-  //   )
-  //   ..registerLazySingleton<BillingRepository>(
-  //     () => BillingRepositoryImpl(getIt()),
-  //   );
-
-  // Domain
-  // getIt
-  //   ..registerLazySingleton(() => ActiveBillingUsecase(getIt()))
-  //   ..registerLazySingleton(() => HistoryBillingUsecase(getIt()))
-  //   ..registerLazySingleton(() => CreateInvoiceUseCase(getIt()));
-
-  // getIt
-  //   ..registerFactory(
-  //     () => ActiveBillingBloc(
-  //       activeBillingUsecase: getIt(),
-  //       createInvoiceUseCase: getIt(),
-  //     ),
-  //   )
-  //   ..registerFactory(() => HistoryBillingBloc(historyBillingUsecase: getIt()));
-
-  // ------------------------------ Ticket ------------------------------------
-
-  // Data
-  // getIt
-  //   ..registerLazySingleton<TicketApiDataSource>(
-  //     () => TicketApiDataSourceImpl(getIt()),
-  //   )
-  //   ..registerLazySingleton<TicketRepository>(
-  //     () => TicketRepositoryImpl(getIt()),
-  //   );
-
-  // Domain
-  // getIt
-  //   ..registerLazySingleton(() => GetTicketUseCase(getIt()))
-  //   ..registerLazySingleton(() => CreateTicketUseCase(getIt()));
-
-  // getIt.registerFactory(
-  //   () => TicketBloc(
-  //     getTicketUseCase: getIt(),
-  //     createTicketUseCase: getIt(),
-  //   ),
-  // );
-
-  // ------------------------------ Internet Package ------------------------------------
-
-  // Data
-  // getIt
-  //   ..registerLazySingleton<InternetPackageApiDataSource>(
-  //     () => InternetPackageApiDataSourceImpl(getIt()),
-  //   )
-  //   ..registerLazySingleton<InternetPackageRepository>(
-  //     () => InternetPackageRepositoryImpl(getIt()),
-  //   );
-
-  // Domain
-  // getIt
-  //   ..registerLazySingleton(() => InternetPackageUsecase(getIt()))
-  //   ..registerLazySingleton(() => InternetPackageItemUsecase(getIt()));
-
-  // getIt.registerFactory(
-  //   () => InternetPackageBloc(
-  //     internetPackageUsecase: getIt(),
-  //     internetPackageItemUsecase: getIt(),
-  //   ),
-  // );
-
-  // ------------------------------ Invoice ------------------------------------
-
-  // Data
-  // getIt
-  //   ..registerLazySingleton<InvoiceApiDataSource>(
-  //     () => InvoiceApiDataSourceImpl(getIt()),
-  //   )
-  //   ..registerLazySingleton<InvoiceRepository>(
-  //     () => InvoiceRepositoryImpl(getIt()),
-  //   );
-
-  // Domain
-  // getIt
-  //   ..registerLazySingleton(() => GetInvoiceUseCase(getIt()))
-  //   ..registerLazySingleton(() => ExpireInvoiceUseCase(getIt()));
-
-  // getIt.registerFactory(
-  //   () => InvoiceBloc(
-  //     getInvoiceUseCase: getIt(),
-  //     expireInvoiceUseCase: getIt(),
-  //   ),
-  // );
+  getIt.registerFactory(
+    () => WilayahBloc(
+      provinceUsecase: getIt(),
+      cityUsecase: getIt(),
+    ),
+  );
 }
 
 Future<void> _setupCore() async {
@@ -173,14 +47,13 @@ Future<void> _setupCore() async {
   getIt.registerLazySingleton(
     () => CaptureErrorUseCase(),
   );
-  // getIt.registerLazySingleton(
-  //   () => Dio()
-  //     ..options = BaseOptions(baseUrl: AppConfig.baseUrl.value)
-  //     ..interceptors.addAll([
-  //       LogInterceptor(requestBody: false, responseBody: false),
-  //       AuthHttpInterceptor(getIt()),
-  //     ]),
-  // );
+  getIt.registerLazySingleton(
+    () => Dio()
+      ..options = BaseOptions(baseUrl: AppConfig.baseUrl.value)
+      ..interceptors.addAll([
+        LogInterceptor(requestBody: false, responseBody: false),
+      ]),
+  );
 
   if (!kIsWeb) {
     final appDocDir = await getApplicationDocumentsDirectory();

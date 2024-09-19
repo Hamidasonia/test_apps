@@ -6,6 +6,7 @@ import 'package:get_it/get_it.dart';
 import 'package:test_apps/app/config.dart';
 import 'package:test_apps/app/route.dart';
 import 'package:test_apps/features/splash_page.dart';
+import 'package:test_apps/features/wilayah/wilayah.dart';
 
 import '../core/core.dart';
 
@@ -29,7 +30,11 @@ class App extends StatelessWidget {
     );
 
     return MultiBlocProvider(
-      providers: [],
+      providers: [
+        BlocProvider(
+          create: (context) => GetIt.I<WilayahBloc>()..add(GetProvinceEvent()),
+        ),
+      ],
       child: const _AppWidget(),
     );
   }
@@ -60,7 +65,6 @@ class _AppWidgetState extends State<_AppWidget> {
 
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp(
       navigatorKey: navigationKey,
       title: AppConfig.appName,

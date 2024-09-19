@@ -8,7 +8,7 @@ class AppConfig {
   static const FlavorConfig<String> baseUrl = FlavorConfig<String>(
     prod: '',
     // dev: 'http://192.168.1.12:8000/api',
-    dev: 'https://dev.dashboard.nimnet.id/api',
+    dev: 'https://www.emsifa.com/api-wilayah-indonesia/api/',
   );
 
   static const AppTheme defaultTheme = AppTheme.light;

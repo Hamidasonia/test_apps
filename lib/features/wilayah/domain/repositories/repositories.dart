@@ -1,0 +1,1 @@
+export 'wilayah_repository.dart';

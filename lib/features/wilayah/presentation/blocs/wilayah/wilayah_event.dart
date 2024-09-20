@@ -16,6 +16,14 @@ class GetCityEvent extends WilayahEvent {
   const GetCityEvent({required this.id});
 }
 
-class GetDistrictEvent extends WilayahEvent {}
+class GetDistrictEvent extends WilayahEvent {
+  final String id;
 
-class GetVillageEvent extends WilayahEvent {}
+  const GetDistrictEvent({required this.id});
+}
+
+class GetVillageEvent extends WilayahEvent {
+  final String id;
+
+  const GetVillageEvent({required this.id});
+}

@@ -6,4 +6,8 @@ abstract class WilayahRepository {
   Future<Either<Failure, List<Province>>> province();
 
   Future<Either<Failure, List<City>>> city(String id);
+
+  Future<Either<Failure, List<District>>> district(String id);
+
+  Future<Either<Failure, List<Village>>> village(String id);
 }

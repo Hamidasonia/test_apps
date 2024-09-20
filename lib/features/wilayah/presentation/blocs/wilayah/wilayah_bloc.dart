@@ -10,6 +10,8 @@ class WilayahBloc extends Bloc<WilayahEvent, WilayahState> {
   WilayahBloc({
     required this.provinceUsecase,
     required this.cityUsecase,
+    required this.districtUsecase,
+    required this.villageUsecase,
 }) :super(WilayahState.initial()) {
 
     on<GetProvinceEvent>((event, emit) async {
@@ -57,8 +59,52 @@ class WilayahBloc extends Bloc<WilayahEvent, WilayahState> {
             RecordErrorParams(exception: exception, stackTrace: stackTrace));
       }
     });
+
+    on<GetDistrictEvent>((event, emit) async {
+      try {
+        emit(state.copyWith(status: WilayahStatus.loadingDistrict));
+        final usecase = await districtUsecase(GetDistrictParams(id: event.id));
+        usecase.fold((l) {
+          emit(state.copyWith(
+            failureDistrict: l,
+            status: WilayahStatus.failureDistrict,
+          ));
+        }, (r) {
+          emit(state.copyWith(
+            district: r,
+            status: WilayahStatus.successDistrict,
+          ));
+        });
+      } catch (exception, stackTrace) {
+        exception.recordError(
+            RecordErrorParams(exception: exception, stackTrace: stackTrace));
+      }
+    });
+
+    on<GetVillageEvent>((event, emit) async {
+      try {
+        emit(state.copyWith(status: WilayahStatus.loadingVillage));
+        final usecase = await villageUsecase(GetVillageParams(id: event.id));
+        usecase.fold((l) {
+          emit(state.copyWith(
+            failureVillage: l,
+            status: WilayahStatus.failureVillage,
+          ));
+        }, (r) {
+          emit(state.copyWith(
+            village: r,
+            status: WilayahStatus.successVillage,
+          ));
+        });
+      } catch (exception, stackTrace) {
+        exception.recordError(
+            RecordErrorParams(exception: exception, stackTrace: stackTrace));
+      }
+    });
   }
 
   final ProvinceUsecase provinceUsecase;
   final CityUsecase cityUsecase;
+  final DistrictUsecase districtUsecase;
+  final VillageUsecase villageUsecase;
 }

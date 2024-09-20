@@ -31,12 +31,16 @@ Future<void> setupLocator() async {
   getIt
     ..registerLazySingleton(() => ProvinceUsecase(getIt()))
     ..registerLazySingleton(RecordErrorUseCase.new)
-    ..registerLazySingleton(() => CityUsecase(getIt()));
+    ..registerLazySingleton(() => CityUsecase(getIt()))
+    ..registerLazySingleton(() => DistrictUsecase(getIt()))
+    ..registerLazySingleton(() => VillageUsecase(getIt()));
 
   getIt.registerFactory(
     () => WilayahBloc(
       provinceUsecase: getIt(),
       cityUsecase: getIt(),
+      districtUsecase: getIt(),
+      villageUsecase: getIt(),
     ),
   );
 }

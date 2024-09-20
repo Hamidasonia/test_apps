@@ -5,7 +5,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get_it/get_it.dart';
 import 'package:test_apps/app/config.dart';
 import 'package:test_apps/app/route.dart';
-import 'package:test_apps/features/splash_page.dart';
+import 'package:test_apps/features/home_page.dart';
 import 'package:test_apps/features/wilayah/wilayah.dart';
 
 import '../core/core.dart';
@@ -71,7 +71,7 @@ class _AppWidgetState extends State<_AppWidget> {
       debugShowCheckedModeBanner: false,
       navigatorObservers: [routeObserver],
       onGenerateRoute: route,
-      home: const SplashPage(),
+      home: const HomePage(),
       builder: EasyLoading.init(),
     );
   }

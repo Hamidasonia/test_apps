@@ -26,4 +26,24 @@ class WilayahRepositoryImpl implements WilayahRepository {
       return Left(ServerFailure(message: e.message, code: e.code));
     }
   }
+
+  @override
+  Future<Either<Failure, List<District>>> district(String id) async {
+    try {
+      final result = await wilayahApiDataSource.district(id);
+      return Right(result.map((e) => e.toEntity()).toList());
+    } on ServerException catch (e) {
+      return Left(ServerFailure(message: e.message, code: e.code));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<Village>>> village(String id) async {
+    try {
+      final result = await wilayahApiDataSource.village(id);
+      return Right(result.map((e) => e.toEntity()).toList());
+    } on ServerException catch (e) {
+      return Left(ServerFailure(message: e.message, code: e.code));
+    }
+  }
 }
